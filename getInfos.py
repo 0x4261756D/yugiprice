@@ -4,14 +4,15 @@ import requests
 from html import escape
 import sys
 
-if len(sys.argv) != 1 or sys.argv[1] in ['-h', '--help']:
+if len(sys.argv) != 2 or sys.argv[1] in ['-h', '--help']:
 	print('''
 	Usage: ./getInfos.py <filename>
 	<filename>: path to a file containing the ids of yugioh cards (<pack id>-<language><number>).
 	The id of a card can be found right hand below the card's picture.
 	''')
+	exit(1)
 
-t = open('ids.txt')
+t = open(sys.argv[1])
 
 for i in t.readlines():
 	s = i.replace('\n', '').split('-')
