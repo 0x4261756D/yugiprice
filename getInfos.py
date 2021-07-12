@@ -23,6 +23,8 @@ for i in t.readlines():
 		r.close()
 		r = requests.get('http://yugipedia.com/index.php?search=' + i.replace('\n', '').split('-')[0])
 		packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '')
+		if packname.endswith('-Structure-Deck'):
+			packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
 		r.close()
 		r = requests.get('http://yugipedia.com/index.php?search=' + i.replace('\n', ''))
 		cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
