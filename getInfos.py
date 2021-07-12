@@ -1,5 +1,15 @@
+#/bin/python3
+
 import requests
 from html import escape
+import sys
+
+if len(sys.argv) != 1 or sys.argv[1] in ['-h', '--help']:
+	print('''
+	Usage: ./getInfos.py <filename>
+	<filename>: path to a file containing the ids of yugioh cards (<pack id>-<language><number>).
+	The id of a card can be found right hand below the card's picture.
+	''')
 
 t = open('ids.txt')
 
