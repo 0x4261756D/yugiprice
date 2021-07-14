@@ -47,13 +47,12 @@ for line in t.readlines():
 			if len(s) == 3:
 				versions = r.text.split(i)[-1].split('<td>')[3].split('</table>')[0].split('<br />')
 				version = re.sub(r'<.+?>', '',versions[int(s[2])-1]).replace(' ', '-')
-				if version == 'Common':
-					version = ''
-				else:
-					version = '-' + version
-				version = '-V-' + s[2] + version
+				version = '-V-' + s[2] + '-' + version
 			r.close()
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + version)
+			if not cardname in r.text:
+				r.close()
+				r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 		name = r.text.split('<h1>')[1].split('<span')[0]
 		parts = r.text.split(' €')[1:5]
 		out = ''
