@@ -38,12 +38,14 @@ for line in t.readlines():
 				packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
 			elif s[0] == 'YSD':
 				packname = 'Starter-Deck-GX-2006'
+			elif s[0] == 'GLD2':
+				packname = 'Gold-Series-2'
 			r.close()
 			r = requests.get('http://yugipedia.com/index.php?search=' + i)
 			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
 			version = ''
 			if len(s) == 3:
-				versions = r.text.split(i)[-1].split('<td>')[3].split('<br />')
+				versions = r.text.split(i)[-1].split('<td>')[3].split('</table>')[0].split('<br />')
 				version = re.sub(r'<.+?>', '',versions[int(s[2])-1]).replace(' ', '-')
 				if version == 'Common':
 					version = ''
