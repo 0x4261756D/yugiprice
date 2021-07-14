@@ -50,7 +50,7 @@ for line in t.readlines():
 				version = '-V-' + s[2] + '-' + version
 			r.close()
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + version)
-			if not cardname in r.text:
+			if 'Invalid product!' in r.text:
 				r.close()
 				r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 		name = r.text.split('<h1>')[1].split('<span')[0]
