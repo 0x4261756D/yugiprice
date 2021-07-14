@@ -29,6 +29,10 @@ for line in t.readlines():
 		if 'Sorry, no matches for your query' in r.text or len(s) == 3:
 			r.close()
 			r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
+			if 'can refer to ' in r.text:
+				n = r.text.split('<li>')[1].split('href="')[1].split('" title')[0]
+				r.close()
+				r = requests.get('http://yugipedia.com' + n)
 			packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '')
 			if packname.endswith('-Structure-Deck'):
 				packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
