@@ -36,6 +36,8 @@ for line in t.readlines():
 			packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace("'", '')
 			if packname.endswith('-Structure-Deck'):
 				packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
+			elif s[0] == 'YSD':
+				packname = 'Starter-Deck-GX-2006'
 			r.close()
 			r = requests.get('http://yugipedia.com/index.php?search=' + i)
 			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
