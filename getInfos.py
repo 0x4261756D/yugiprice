@@ -41,7 +41,7 @@ for line in t.readlines():
 				packname = 'Gold-Series-2'
 			r.close()
 			r = requests.get('http://yugipedia.com/index.php?search=' + i)
-			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '').replace('&', '-')
+			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace(' &amp; ', '-').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
 			version = ''
 			if len(s) == 3:
 				versions = r.text.split(i)[-1].split('<td>')[3].split('</table>')[0].split('<br />')
@@ -49,7 +49,7 @@ for line in t.readlines():
 				version = '-V-' + s[2] + '-' + version
 			r.close()
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + version)
-			if 'Invalid product!' in r.text:
+			if 'Invalid product!' in r.text and len(s) == 3:
 				r.close()
 				r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 		name = r.text.split('<h1>')[1].split('<span')[0]
