@@ -1,7 +1,6 @@
 #/bin/python3
 
 import requests
-from html import escape
 import sys
 import re
 
@@ -42,7 +41,7 @@ for line in t.readlines():
 				packname = 'Gold-Series-2'
 			r.close()
 			r = requests.get('http://yugipedia.com/index.php?search=' + i)
-			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
+			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '').replace('&', '-')
 			version = ''
 			if len(s) == 3:
 				versions = r.text.split(i)[-1].split('<td>')[3].split('</table>')[0].split('<br />')
