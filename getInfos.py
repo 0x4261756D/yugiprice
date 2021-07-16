@@ -3,6 +3,7 @@
 import requests
 import sys
 import re
+import concurrent.futures
 
 if len(sys.argv) != 2 or sys.argv[1] in ['-h', '--help']:
 	print('''
@@ -15,15 +16,20 @@ if len(sys.argv) != 2 or sys.argv[1] in ['-h', '--help']:
 
 t = open(sys.argv[1])
 seen = {}
+text = t.readlines()
 
-for line in t.readlines():
-	if line in seen:
-		print(seen[line])
-	else:
-		s = line.replace('\n', '').split('-')
+def func(start, end):
+	global text
+	infos = []
+	for ind in range(start, end):
+		print(f'{start}/{ind}/{end}')
+		#if line in seen:
+		#	print(seen[line])
+		#else:
+		s = text[ind].replace('\n', '').split('-')
 		i = s[0] + '-' + '0' * (3 - len(s[1])) + s[1]
 		i = i.replace('\n', '')
-		print(i, end='|')
+		# print(i, end='|')
 		r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Search?searchString=' + i)
 		if 'Sorry, no matches for your query' in r.text or len(s) == 3:
 			r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
@@ -54,8 +60,22 @@ for line in t.readlines():
 		out = ''
 		for f in parts:
 			out += f.split('<span>')[1] + '|'
-		print(out, end='')
+		# print(out, end='')
 		out = i + '|' + out + name
-		print(name)
-		seen[line] = out
-r.close()
+		infos.append(out)
+		# print(name)
+		# seen[line] = out
+	r.close()
+	return infos
+
+thread_count = 10
+batch_size = int(len(text) / thread_count)
+residue = len(text) - (thread_count * batch_size)
+
+complete = []
+with concurrent.futures.ThreadPoolExecutor() as executor:
+	futures = [executor.submit(func, i * batch_size, (i + 1) * batch_size + int(i / (thread_count - 1)) * residue) for i in range(thread_count)]
+	complete = [f.result() for f in futures]
+
+for i in complete:
+	print(i)
