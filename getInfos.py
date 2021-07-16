@@ -23,7 +23,7 @@ def func(start, end):
 	global text
 	infos = []
 	for ind in range(start, end):
-		print(f'{start}/{ind}/{end}')
+		print(f'{start}/{ind}/{end}, {time.time()}')
 		s = text[ind].replace('\n', '').split('-')
 		i = s[0] + '-' + '0' * (3 - len(s[1])) + s[1]
 		i = i.replace('\n', '')
@@ -73,6 +73,7 @@ def func(start, end):
 			out += f.split('<span>')[1] + '|'
 		out = i + '|' + out + name
 		infos.append(out)
+		time.sleep(.5)
 	r.close()
 	return infos
 
