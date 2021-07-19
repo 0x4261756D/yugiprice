@@ -29,7 +29,8 @@ def func(start, end):
 		i = i.replace('\n', '')
 		r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Search?searchString=' + i)
 		while r.status_code == 429:
-			time.sleep(5)
+			print('---Ratelimited---')
+			time.sleep(25)
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Search?searchString=' + i)
 		if 'Sorry, no matches for your query' in r.text or len(s) == 3:
 			r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
@@ -53,13 +54,13 @@ def func(start, end):
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + version)
 			while r.status_code == 429:
 				print('---Ratelimited---')
-				time.sleep(5)
+				time.sleep(25)
 				r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + version)
 			if 'Invalid product!' in r.text and len(s) == 3:
 				r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 				while r.status_code == 429:
 					print('---Ratelimited---')
-					time.sleep(5)
+					time.sleep(25)
 					r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 		tmp1 = r.text.split('<h1>')
 		tmp2 = r.text.split(' €')
@@ -74,7 +75,7 @@ def func(start, end):
 			out += f.split('<span>')[1] + '|'
 		out = i + '|' + out + name
 		infos.append(out)
-		time.sleep(5)
+		time.sleep(10)
 	r.close()
 	return infos
 
