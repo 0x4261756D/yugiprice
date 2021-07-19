@@ -9,6 +9,6 @@ This mashing-together of different services produces very many edge cases (read 
 ```bash
 python3 getInfos.py path/to/your/file
 ```
-The format for the input file is one card id per line, if multiple versions of a card exist in the same pack add *-<version index>*(see cardmarket's **V.<version index>**).
+The format for the input file is one card id per line, if multiple versions of a card exist in the same pack add *-\<version index\>*(see cardmarket's **V.\<version index\>**).
 (Also please tell me if there is a better solution to this as needing to visit cardmarket in order to scrape data kind of undermines the intention of this script...)
 Only outputs the card's id, name and prices (in the same order they appear on cardmarket) to stdout once the whole input file is processed.
