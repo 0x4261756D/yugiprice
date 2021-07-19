@@ -53,7 +53,7 @@ def func(start, end):
 					n = r.text.split('<li>')[1].split('href="')[1].split('" title')[0]
 					r = requests.get('http://yugipedia.com' + n)
 				packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('-', '').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace("'", '').replace('ARC-V', 'ArcV').replace('!', '')
-			if cardname != '__ERROR__':
+			if cardname == '__ERROR__':
 				r = requests.get('http://yugipedia.com/index.php?search=' + i)
 				cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace(' &amp; ', '-').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
 			version = ''
