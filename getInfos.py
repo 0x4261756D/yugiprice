@@ -33,19 +33,29 @@ def func(start, end):
 			time.sleep(25)
 			r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Search?searchString=' + i)
 		if 'Sorry, no matches for your query' in r.text or len(s) == 3:
-			r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
-			if 'can refer to ' in r.text:
-				n = r.text.split('<li>')[1].split('href="')[1].split('" title')[0]
-				r = requests.get('http://yugipedia.com' + n)
-			packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('-', '').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace("'", '').replace('ARC-V', 'ArcV').replace('!', '')
+			packname = '__ERROR__'
+			cardname = '__ERROR__'
 			if packname.endswith('-Structure-Deck'):
 				packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
 			elif s[0] == 'YSD':
 				packname = 'Starter-Deck-GX-2006'
 			elif s[0] == 'GLD2':
 				packname = 'Gold-Series-2'
-			r = requests.get('http://yugipedia.com/index.php?search=' + i)
-			cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace(' &amp; ', '-').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
+			elif s[0] == 'DPCT':
+				if s[1].endswith('005'):
+					packname = 'Duelist-Pack-Collection-Tin-2011'
+					cardname = 'Frozen-Fitzgerald'
+				else:
+					packname = 'Duelist-Pack-Collection-Tin-2010'
+			else:
+				r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
+				if 'can refer to ' in r.text:
+					n = r.text.split('<li>')[1].split('href="')[1].split('" title')[0]
+					r = requests.get('http://yugipedia.com' + n)
+				packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('-', '').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace("'", '').replace('ARC-V', 'ArcV').replace('!', '')
+			if cardname != '__ERROR__':
+				r = requests.get('http://yugipedia.com/index.php?search=' + i)
+				cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace(' &amp; ', '-').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
 			version = ''
 			if len(s) == 3:
 				versions = r.text.split(i)[-1].split('<td>')[3].split('</table>')[0].split('<br />')
