@@ -35,9 +35,7 @@ def func(start, end):
 		if 'Sorry, no matches for your query' in r.text or len(s) == 3:
 			packname = '__ERROR__'
 			cardname = '__ERROR__'
-			if packname.endswith('-Structure-Deck'):
-				packname = 'Structure-Deck-' + packname.replace('-Structure-Deck', '')
-			elif s[0] == 'YSD':
+			if s[0] == 'YSD':
 				packname = 'Starter-Deck-GX-2006'
 			elif s[0] == 'GLD2':
 				packname = 'Gold-Series-2'
@@ -53,6 +51,8 @@ def func(start, end):
 					n = r.text.split('<li>')[1].split('href="')[1].split('" title')[0]
 					r = requests.get('http://yugipedia.com' + n)
 				packname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace('-', '').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace("'", '').replace('ARC-V', 'ArcV').replace('!', '')
+				if packname.endswith('-Structure-Deck'):
+					packname = 'Structure-Deck-' + packname.split('-Structure-Deck')[0]
 			if cardname == '__ERROR__':
 				r = requests.get('http://yugipedia.com/index.php?search=' + i)
 				cardname = r.text.split('</h1>')[0].split('<h1 id="firstHeading" class="firstHeading" lang="en">')[1].replace(' &amp; ', '-').replace('<i>', '').replace('</i>', '').replace(' ', '-').replace(':', '').replace('.', '').replace(',', '')
