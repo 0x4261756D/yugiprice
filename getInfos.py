@@ -45,6 +45,8 @@ def func(start, end):
 					cardname = 'Frozen-Fitzgerald'
 				else:
 					packname = 'Duelist-Pack-Collection-Tin-2010'
+			elif s[0] == '5DS2':
+				packname = 'Starter-Deck-2009'
 			else:
 				r = requests.get('http://yugipedia.com/index.php?search=' + i.split('-')[0])
 				if 'can refer to ' in r.text:
