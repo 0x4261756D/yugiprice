@@ -101,4 +101,5 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 	complete = [f.result() for f in futures]
 
 for i in complete:
-	print(i)
+	for j in i:
+		print(j)
