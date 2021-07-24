@@ -96,7 +96,7 @@ def func(start, end):
 fallback_number = 2
 thread_count = 10
 if thread_count > len(text):
-	thread_count = len(text) / fallback_number
+	thread_count = int(len(text) / fallback_number)
 batch_size = int(len(text) / thread_count)
 residue = len(text) - (thread_count * batch_size)
 
