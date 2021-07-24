@@ -6,7 +6,9 @@ import re
 import concurrent.futures
 import time
 
-if len(sys.argv) != 2 or sys.argv[1] in ['-h', '--help']:
+has_output_file = len(sys.argv[0]) == 4 and ('-o' in sys.argv or '--output' in sys.argv)
+
+if len(sys.argv) < 2 or sys.argv[1] in ['-h', '--help'] and not has_output_file:
 	print('''
 	Usage: ./getInfos.py <filename>
 	<filename>: path to a file containing the ids of yugioh cards (<pack id>-<language><number>-<rarity index>).
@@ -15,10 +17,10 @@ if len(sys.argv) != 2 or sys.argv[1] in ['-h', '--help']:
 	''')
 	exit(1)
 
-t = open(sys.argv[1])
+t = open(sys.argv[1], 'r')
 seen = {}
 text = t.readlines()
-
+t.close()
 def func(start, end):
 	global text
 	infos = []
@@ -91,7 +93,10 @@ def func(start, end):
 	r.close()
 	return infos
 
+fallback_number = 2
 thread_count = 10
+if thread_count > len(text):
+	thread_count = len(text) / fallback_number
 batch_size = int(len(text) / thread_count)
 residue = len(text) - (thread_count * batch_size)
 
@@ -100,6 +105,17 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 	futures = [executor.submit(func, i * batch_size, (i + 1) * batch_size + int(i / (thread_count - 1)) * residue) for i in range(thread_count)]
 	complete = [f.result() for f in futures]
 
+if has_output_file:
+	if '-o' in sys.argv:
+		t = open(sys.argv[sys.argv.index('-o') + 1], 'w')
+	else:
+		t = open(sys.argv[sys.argv.index('--output') + 1], 'w')
+
 for i in complete:
 	for j in i:
 		print(j)
+		if has_output_file:
+			t.write(j)
+
+if not t.closed:
+	t.close()
