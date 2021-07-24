@@ -6,7 +6,7 @@ import re
 import concurrent.futures
 import time
 
-has_output_file = len(sys.argv[0]) == 4 and ('-o' in sys.argv or '--output' in sys.argv)
+has_output_file = len(sys.argv) == 4 and ('-o' in sys.argv or '--output' in sys.argv)
 
 if len(sys.argv) < 2 or sys.argv[1] in ['-h', '--help'] and not has_output_file:
 	print('''
@@ -115,7 +115,7 @@ for i in complete:
 	for j in i:
 		print(j)
 		if has_output_file:
-			t.write(j)
+			t.write(j + '\n')
 
 if not t.closed:
 	t.close()
