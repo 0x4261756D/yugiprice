@@ -10,10 +10,12 @@ has_output_file = len(sys.argv) == 4 and ('-o' in sys.argv or '--output' in sys.
 
 if len(sys.argv) < 2 or sys.argv[1] in ['-h', '--help'] and not has_output_file:
 	print('''
-	Usage: ./getInfos.py <filename>
+	Usage: ./getInfos.py <filename> [-o <output filename>]
 	<filename>: path to a file containing the ids of yugioh cards (<pack id>-<language><number>-<rarity index>).
 	The id of a card can be found right hand below the card's picture.
 	The rarity index for cards in multiple rarities in the same set is 1-based (hoping there are no discrepancies between yugipedia and cardmarket indexing...)
+	(optional)
+	<output filename>: path to a file the data is written to in addition to stdout
 	''')
 	exit(1)
 
