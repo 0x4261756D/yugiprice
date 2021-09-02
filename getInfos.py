@@ -80,15 +80,19 @@ def func(start, end):
 					r = requests.get('http://www.cardmarket.com/en/YuGiOh/Products/Singles/' + packname + '/' + cardname + '-V-' + s[2])
 		tmp1 = r.text.split('<h1>')
 		tmp2 = r.text.split(' €')
-		if len(tmp1) < 2:
-			sys.exit(f'-----Got the wrong page: start: {start}, end: {end}, current: {ind}, {i}-----\n{r.text}, {r}')
+		out = ''
+		parts = tmp2[1:5]
+		if '£' in tmp2[0]:
+			out = r.text.split('col-offer').split(' €')[0].split('text-nowrap">')[-1]
+			parts = tmp2[1:4]
 		if len(tmp2) < 6:
 			sys.exit(f'-----Too few prices: start: {start}, end: {end}, current: {ind}, {i}-----\n{r.text}, {r}')
-		name = tmp1[1].split('<span')[0]
-		parts = tmp2[1:5]
-		out = ''
 		for f in parts:
 			out += f.split('<span>')[1] + '|'
+			
+		if len(tmp1) < 2:
+			sys.exit(f'-----Got the wrong page: start: {start}, end: {end}, current: {ind}, {i}-----\n{r.text}, {r}')
+		name = tmp1[1].split('<span')[0]
 		out = i + '|' + out + name
 		infos.append(out)
 		time.sleep(10)
