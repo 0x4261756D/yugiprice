@@ -83,7 +83,7 @@ def func(start, end):
 		out = ''
 		parts = tmp2[1:5]
 		if '£' in tmp2[0]:
-			out = r.text.split('col-offer')[1].split(' €')[0].split('text-nowrap">')[-1]
+			out = r.text.split('col-offer')[1].split(' €')[0].split('text-nowrap">')[-1] + '|'
 			parts = tmp2[1:4]
 		if len(tmp2) < 6:
 			sys.exit(f'-----Too few prices: start: {start}, end: {end}, current: {ind}, {i}-----\n{r.text}, {r}')
