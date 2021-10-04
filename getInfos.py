@@ -6,9 +6,9 @@ import re
 import concurrent.futures
 import time
 
-has_output_file = len(sys.argv) == 4 and ('-o' in sys.argv or '--output' in sys.argv)
+has_output_file = '-o' in sys.argv or '--output' in sys.argv
 
-if len(sys.argv) < 2 or sys.argv[1] in ['-h', '--help'] and not has_output_file:
+if len(sys.argv) < 2 or sys.argv[1] in ['-h', '--help']:
 	print('''
 	Usage: ./getInfos.py <filename> [-o <output filename>]
 	<filename>: path to a file containing the ids of yugioh cards (<pack id>-<language><number>-<rarity index>).
