@@ -1,3 +1,5 @@
+** Moved to [Codeberg](https://codeberg.org/0x4261756D/yugiprice) **
+
 # yugiprice
 Python tool to scrape card prices based on a list of card ID's.
 Pretty badly multithreaded. (I have no clue how to do this in python)
