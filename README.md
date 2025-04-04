@@ -1,4 +1,4 @@
-** Moved to [Codeberg](https://codeberg.org/0x4261756D/yugiprice) **
+**Moved to [Codeberg](https://codeberg.org/0x4261756D/yugiprice)**
 
 # yugiprice
 Python tool to scrape card prices based on a list of card ID's.
